@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const content = [
   {
@@ -12,22 +12,22 @@ const content = [
   }
 ]
 
-const useTabs = (initialTab, allTabs) => {
-  const [currentIndex, setCurrentIndex] = useState(initialTab);
-  return {
-    currentItem : allTabs[currentIndex],
-    changeItem : setCurrentIndex
+const useTitle = (initialTitle) => {
+  const [title, setTitle] = useState(initialTitle);
+  const updateTitle = () => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerText = title;
   }
+  useEffect(updateTitle, [title]);
+  return setTitle;
 }
 
 const App = () => {
-  const {currentItem, changeItem} = useTabs(0, content);
+  const titleUpdater = useTitle("Loading...");
+  setTimeout(() => titleUpdater("Home"), 500)
   return (
     <div className="App">
-      {content.map((section, index) => (
-        <button onClick={() => changeItem(index)}>{section.tab}</button>
-      ))}
-      <div>{currentItem.content}</div>
+
     </div>
   );
 };
