@@ -80,3 +80,39 @@ const App = () => {
 };
 ```
 </details>
+
+<details><summary>[3] useClick</summary>
+
+```js
+const useClick = (onClick) => {
+  const element = useRef();
+  useEffect(() => {
+    if(element.current){
+      element.current.addEventListener("click", onClick);
+    }
+    return () => {
+      if(element.current){
+        element.current.removeEventListener("click", onClick);
+      }
+    }
+  }, []);
+  return typeof onClick !== "function" ? undefined : element;
+}
+
+const App = () => {
+  const sayHello = () => {
+    console.log("Say Hello!")
+  }
+  const title = useClick(sayHello); 
+  return (
+    <div className="App">
+      <h1 ref={title}>Hi</h1>
+    </div>
+  );
+};
+
+const rootElement = document.getElementById("root");
+const root = ReactDOM.createRoot(rootElement);
+root.render(<App />);
+```
+</details>
