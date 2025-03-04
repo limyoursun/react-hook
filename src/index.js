@@ -1,13 +1,28 @@
 import ReactDOM from "react-dom/client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 const App = () => {
-  const saecom = useRef();
-    setTimeout(() => saecom.current?.focus(), 1000)
+
+  const useClick = (onClick) => {
+    const element = useRef();
+    useEffect(() => {
+      if(element.current){ // componentDidMount
+        element.current.addEventListener("click", onClick)
+      }
+      return () => { // componentWillUnMount
+        if(element.current){
+          element.current.removeEventListener("click", onClick)
+        }
+      }
+    }, [])
+    return element;
+  }
+  const sayHello = () => console.log("하이염");
+  const title = useClick(sayHello);
 
   return (
     <div className="App">
-      <input ref={saecom} placeholder="텍스트를 입력하세요"/>
+      <h1 ref={title}>click to sat hi</h1>
     </div>
   );
 };
