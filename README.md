@@ -81,7 +81,35 @@ const App = () => {
 ```
 </details>
 
-<details><summary>[3] useClick</summary>
+<details><summary>[3] useTitle</summary>
+
+```js
+const useTitle = (initialTitle) => {
+  const [title, setTitle] = useState(initialTitle);
+  const updateTitle = () => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerText = title;
+  }
+  useEffect(updateTitle, [title])
+  return setTitle;
+}
+
+const App = () => {
+  const titleUpdater = useTitle("first Title")
+  setTimeout(() => titleUpdater("Second Title"), 500)
+  return (
+    <div className="App">
+    </div>
+  );
+};
+
+const rootElement = document.getElementById("root");
+const root = ReactDOM.createRoot(rootElement);
+root.render(<App />);
+```
+</details>
+
+<details><summary>[4] useClick</summary>
 
 ```js
 const useClick = (onClick) => {
