@@ -1,21 +1,13 @@
 import ReactDOM from "react-dom/client";
-import React, { useEffect, useState } from "react";
-
-const useTitle = (initialTitle) => {
-  const [title, setTitle] = useState(initialTitle);
-  const updateTitle = () => {
-    const htmlTitle = document.querySelector("title");
-    htmlTitle.innerText = title;
-  }
-  useEffect(updateTitle, [title])
-  return setTitle;
-}
+import React, { useRef } from "react";
 
 const App = () => {
-  const titleUpdater = useTitle("first Title")
-  setTimeout(() => titleUpdater("Second Title"), 500)
+  const saecom = useRef();
+    setTimeout(() => saecom.current?.focus(), 1000)
+
   return (
     <div className="App">
+      <input ref={saecom} placeholder="텍스트를 입력하세요"/>
     </div>
   );
 };
